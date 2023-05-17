@@ -10,11 +10,17 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 
-public class FileSelectionPanel extends JPanel {
+class FileSelectionPanel extends JPanel {
     private File fileToSend;
+    private final List<FileSelectionObserver> observers;
 
-    public FileSelectionPanel() {
+    public FileSelectionPanel(FileSelectionObserver observer) {
+        observers = new ArrayList<>();
+        observers.add(observer);
+
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         JLabel title = new JLabel("MV File Sender");
@@ -48,6 +54,16 @@ public class FileSelectionPanel extends JPanel {
         add(buttonPanel);
     }
 
+    public void addObserver(FileSelectionObserver observer) {
+        observers.add(observer);
+    }
+
+    private void notifyObservers() {
+        for (FileSelectionObserver observer : observers) {
+            observer.onFileSelected(fileToSend);
+        }
+    }
+
     private class ChooseFileHandler implements ActionListener {
         public void actionPerformed(ActionEvent event) {
             JFileChooser fileChooser = new JFileChooser();
@@ -57,6 +73,7 @@ public class FileSelectionPanel extends JPanel {
                 fileToSend = fileChooser.getSelectedFile();
                 JLabel fileNameLabel = (JLabel) FileSelectionPanel.this.getComponent(1);
                 fileNameLabel.setText("The file you want to send is: " + fileToSend.getName());
+                notifyObservers();
             }
         }
     }

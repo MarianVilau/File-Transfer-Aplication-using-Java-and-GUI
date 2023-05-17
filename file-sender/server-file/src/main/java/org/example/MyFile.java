@@ -1,47 +1,29 @@
 package org.example;
 
-public class MyFile {
-    private int id;
-    private String name;
-    private byte[] data;
-    private String fileExtension;
-    public MyFile(int id, String name, byte[] data, String fileExtension) {
-        this.id = id;
-        this.name = name;
-        this.data = data;
-        this.fileExtension = fileExtension;
+// MyFile class representing the data
+class MyFile {
+    private String fileName;
+    private byte[] fileContent;
+
+    public MyFile(String fileName, byte[] fileContent) {
+        this.fileName = fileName;
+        this.fileContent = fileContent;
     }
 
-    public int getId() {
-        return id;
+    public String getFileName() {
+        return fileName;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public byte[] getData() {
-        return data;
-    }
-
-    public void setData(byte[] data) {
-        this.data = data;
+    public byte[] getFileContent() {
+        return fileContent;
     }
 
     public String getFileExtension() {
-        return fileExtension;
+        int index = fileName.lastIndexOf(".");
+        if (index > 0) {
+            return fileName.substring(index + 1);
+        } else {
+            return "No extension found.";
+        }
     }
-
-    public void setFileExtension(String fileExtension) {
-        this.fileExtension = fileExtension;
-    }
-
 }

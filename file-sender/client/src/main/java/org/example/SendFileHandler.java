@@ -6,7 +6,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.Socket;
 
-public class SendFileHandler implements Runnable {
+class SendFileHandler implements Runnable {
     private final Socket socket;
     private final File fileToSend;
 

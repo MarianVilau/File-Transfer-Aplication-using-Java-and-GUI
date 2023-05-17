@@ -7,10 +7,17 @@ public class Client {
         JFrame frame = new JFrame("MV Client");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        frame.add(new FileSelectionPanel());
+        // Factory Method Pattern: FileSelectionPanelFactory
+        FileSelectionPanel fileSelectionPanel = FileSelectionPanelFactory.createFileSelectionPanel();
+
+        // Observer Pattern: FileSelectionObserver
+        fileSelectionPanel.addObserver(new SendFileObserver());
+
+        frame.add(fileSelectionPanel);
 
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
 }
+
